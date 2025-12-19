@@ -1,0 +1,1944 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Things...</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Lexend:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #1a1a2e;
+            --bg-secondary: #16213e;
+            --accent-pink: #ff6b9d;
+            --accent-yellow: #ffd93d;
+            --accent-blue: #6bcbff;
+            --accent-green: #6bff9d;
+            --accent-purple: #b36bff;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0b0;
+            --card-bg: rgba(255, 255, 255, 0.08);
+            --card-border: rgba(255, 255, 255, 0.12);
+        }
+
+        body {
+            font-family: 'Lexend', sans-serif;
+            background: var(--bg-primary);
+            background-image: 
+                radial-gradient(ellipse at 20% 20%, rgba(107, 203, 255, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(255, 107, 157, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(179, 107, 255, 0.1) 0%, transparent 70%);
+            min-height: 100vh;
+            min-height: 100dvh;
+            color: var(--text-primary);
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+            min-height: 100vh;
+            min-height: 100dvh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .screen {
+            display: none;
+            flex-direction: column;
+            flex: 1;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .screen.active {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes pop {
+            0% { transform: scale(0.8); opacity: 0; }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes celebrate {
+            0% { transform: scale(1) rotate(0deg); }
+            25% { transform: scale(1.1) rotate(-5deg); }
+            50% { transform: scale(1) rotate(5deg); }
+            75% { transform: scale(1.1) rotate(-3deg); }
+            100% { transform: scale(1) rotate(0deg); }
+        }
+
+        .logo {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 4rem;
+            font-weight: 700;
+            text-align: center;
+            margin: 40px 0;
+            background: linear-gradient(135deg, var(--accent-pink), var(--accent-yellow), var(--accent-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .logo span {
+            display: inline-block;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: var(--text-secondary);
+            margin-bottom: 40px;
+            font-weight: 300;
+        }
+
+        .btn {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 600;
+            padding: 16px 32px;
+            border: none;
+            border-radius: 16px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            width: 100%;
+            margin-bottom: 12px;
+        }
+
+        .btn:active {
+            transform: scale(0.98);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent-pink), var(--accent-purple));
+            color: white;
+            box-shadow: 0 4px 20px rgba(255, 107, 157, 0.4);
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 6px 30px rgba(255, 107, 157, 0.6);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: var(--card-bg);
+            color: var(--text-primary);
+            border: 2px solid var(--card-border);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.12);
+            border-color: var(--accent-blue);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, var(--accent-green), #4ecdc4);
+            color: var(--bg-primary);
+            box-shadow: 0 4px 20px rgba(107, 255, 157, 0.4);
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #ff6b6b, var(--accent-pink));
+            color: white;
+            box-shadow: 0 4px 20px rgba(255, 107, 107, 0.4);
+        }
+
+        .btn-small {
+            padding: 12px 24px;
+            font-size: 1rem;
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .input-group input, .input-group textarea {
+            width: 100%;
+            padding: 16px;
+            font-family: 'Lexend', sans-serif;
+            font-size: 1.1rem;
+            background: var(--card-bg);
+            border: 2px solid var(--card-border);
+            border-radius: 12px;
+            color: var(--text-primary);
+            transition: all 0.2s ease;
+        }
+
+        .input-group input:focus, .input-group textarea:focus {
+            outline: none;
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 20px rgba(107, 203, 255, 0.2);
+        }
+
+        .input-group input::placeholder, .input-group textarea::placeholder {
+            color: var(--text-secondary);
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            padding: 24px;
+            margin-bottom: 16px;
+            backdrop-filter: blur(10px);
+        }
+
+        .room-code {
+            text-align: center;
+            padding: 30px;
+        }
+
+        .room-code-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+
+        .room-code-value {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            letter-spacing: 8px;
+            color: var(--accent-yellow);
+            text-shadow: 0 0 30px rgba(255, 217, 61, 0.5);
+        }
+
+        .players-list {
+            list-style: none;
+        }
+
+        .player-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 16px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            margin-bottom: 8px;
+            animation: pop 0.3s ease-out;
+        }
+
+        .player-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Fredoka', sans-serif;
+            font-weight: 600;
+            font-size: 1.2rem;
+            margin-right: 12px;
+            color: var(--bg-primary);
+        }
+
+        .player-name {
+            flex: 1;
+            font-weight: 500;
+        }
+
+        .player-host {
+            font-size: 0.8rem;
+            color: var(--accent-yellow);
+            background: rgba(255, 217, 61, 0.2);
+            padding: 4px 10px;
+            border-radius: 20px;
+        }
+
+        .player-points {
+            font-family: 'Fredoka', sans-serif;
+            font-weight: 600;
+            color: var(--accent-green);
+            font-size: 1.1rem;
+        }
+
+        /* Circle arrangement for seating */
+        .seating-circle {
+            position: relative;
+            width: 280px;
+            height: 280px;
+            margin: 20px auto;
+        }
+
+        .seating-player {
+            position: absolute;
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Fredoka', sans-serif;
+            font-weight: 600;
+            font-size: 0.8rem;
+            text-align: center;
+            cursor: grab;
+            user-select: none;
+            padding: 5px;
+            word-break: break-word;
+            line-height: 1.1;
+            color: var(--bg-primary);
+            transition: left 0.25s ease, top 0.25s ease, transform 0.15s ease, box-shadow 0.15s ease;
+            z-index: 1;
+        }
+
+        .seating-player.dragging {
+            cursor: grabbing;
+            transform: scale(1.15);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4), 0 0 20px rgba(255, 255, 255, 0.3);
+            z-index: 100;
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+        }
+
+        .seating-ghost {
+            position: absolute;
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            border: 3px dashed rgba(255, 255, 255, 0.4);
+            background: rgba(255, 255, 255, 0.1);
+            z-index: 0;
+        }
+
+        .seating-center-label {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            pointer-events: none;
+        }
+
+        .seating-center-label .icon {
+            font-size: 1.5rem;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .prompt-display {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 600;
+            text-align: center;
+            padding: 30px;
+            background: linear-gradient(135deg, rgba(255, 107, 157, 0.2), rgba(179, 107, 255, 0.2));
+            border-radius: 20px;
+            margin-bottom: 20px;
+            line-height: 1.3;
+        }
+
+        .waiting-text {
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            padding: 40px;
+        }
+
+        .waiting-text .dot-animation {
+            display: inline-block;
+            animation: dots 1.5s infinite;
+        }
+
+        @keyframes dots {
+            0%, 20% { content: '.'; }
+            40% { content: '..'; }
+            60%, 100% { content: '...'; }
+        }
+
+        .answer-card {
+            background: var(--card-bg);
+            border: 2px solid var(--card-border);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .answer-card:hover {
+            border-color: var(--accent-blue);
+            transform: translateX(5px);
+        }
+
+        .answer-card.selected {
+            border-color: var(--accent-green);
+            background: rgba(107, 255, 157, 0.1);
+        }
+
+        .answer-card.eliminated {
+            opacity: 0.4;
+            text-decoration: line-through;
+            pointer-events: none;
+        }
+
+        .answer-text {
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+        }
+
+        .answer-author {
+            font-size: 0.85rem;
+            color: var(--accent-pink);
+        }
+
+        .turn-indicator {
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(135deg, rgba(107, 203, 255, 0.2), rgba(107, 255, 157, 0.2));
+            border-radius: 16px;
+            margin-bottom: 20px;
+        }
+
+        .turn-indicator .label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 5px;
+        }
+
+        .turn-indicator .name {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--accent-blue);
+        }
+
+        .guess-buttons {
+            display: flex;
+            gap: 16px;
+            margin-top: 20px;
+        }
+
+        .guess-buttons .btn {
+            flex: 1;
+            font-size: 2rem;
+            padding: 20px;
+        }
+
+        .survivor-celebration {
+            text-align: center;
+            padding: 40px;
+            animation: celebrate 0.5s ease-out;
+        }
+
+        .survivor-celebration .crown {
+            font-size: 5rem;
+            margin-bottom: 20px;
+        }
+
+        .survivor-celebration .message {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--accent-yellow);
+        }
+
+        .scores-list {
+            margin-top: 20px;
+        }
+
+        .score-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            margin-bottom: 8px;
+        }
+
+        .score-item.winner {
+            background: linear-gradient(135deg, rgba(255, 217, 61, 0.3), rgba(255, 107, 157, 0.3));
+            border: 2px solid var(--accent-yellow);
+        }
+
+        .score-rank {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            width: 40px;
+        }
+
+        .score-name {
+            flex: 1;
+            font-weight: 500;
+            margin-left: 12px;
+        }
+
+        .score-points {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--accent-green);
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .header-title {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .round-info {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .status-bar {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px;
+            background: rgba(255, 217, 61, 0.15);
+            border-radius: 12px;
+            margin-bottom: 20px;
+            color: var(--accent-yellow);
+        }
+
+        .status-bar .icon {
+            font-size: 1.2rem;
+        }
+
+        .bonus-section {
+            margin-top: 20px;
+            padding: 20px;
+            background: linear-gradient(135deg, rgba(255, 217, 61, 0.2), rgba(255, 107, 157, 0.2));
+            border-radius: 16px;
+            text-align: center;
+        }
+
+        .bonus-section h3 {
+            font-family: 'Fredoka', sans-serif;
+            margin-bottom: 15px;
+            color: var(--accent-yellow);
+        }
+
+        .error-message {
+            background: rgba(255, 107, 107, 0.2);
+            border: 1px solid rgba(255, 107, 107, 0.5);
+            color: #ff6b6b;
+            padding: 12px 16px;
+            border-radius: 12px;
+            margin-bottom: 16px;
+            text-align: center;
+        }
+
+        .flex-center {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            flex: 1;
+        }
+
+        .mb-20 { margin-bottom: 20px; }
+        .mt-20 { margin-top: 20px; }
+        .mt-auto { margin-top: auto; }
+        .text-center { text-align: center; }
+
+        /* Player colors */
+        .color-0 { background: linear-gradient(135deg, #ff6b9d, #ff8fab); }
+        .color-1 { background: linear-gradient(135deg, #6bcbff, #8bd8ff); }
+        .color-2 { background: linear-gradient(135deg, #ffd93d, #ffe066); }
+        .color-3 { background: linear-gradient(135deg, #6bff9d, #8fffb3); }
+        .color-4 { background: linear-gradient(135deg, #b36bff, #c78fff); }
+        .color-5 { background: linear-gradient(135deg, #ff9f6b, #ffb38a); }
+        .color-6 { background: linear-gradient(135deg, #6bfff0, #8afff5); }
+        .color-7 { background: linear-gradient(135deg, #ff6bdb, #ff8ae3); }
+        .color-8 { background: linear-gradient(135deg, #9dff6b, #b3ff8a); }
+        .color-9 { background: linear-gradient(135deg, #6b8aff, #8aa3ff); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Home Screen -->
+        <div id="screen-home" class="screen active">
+            <div class="logo">Things...</div>
+            <p class="subtitle">The hilarious guessing game</p>
+            
+            <div class="mt-auto">
+                <button class="btn btn-primary" onclick="showScreen('screen-create')">Create Game</button>
+                <button class="btn btn-secondary" onclick="showScreen('screen-join')">Join Game</button>
+            </div>
+        </div>
+
+        <!-- Create Game Screen -->
+        <div id="screen-create" class="screen">
+            <div class="header">
+                <button class="btn btn-secondary btn-small" onclick="showScreen('screen-home')">← Back</button>
+            </div>
+            
+            <div class="logo" style="font-size: 2.5rem; margin: 20px 0;">Create Game</div>
+            
+            <div class="input-group">
+                <label>Your name</label>
+                <input type="text" id="host-name" placeholder="Enter your name" maxlength="20">
+            </div>
+            
+            <div id="create-error" class="error-message" style="display: none;"></div>
+            
+            <div class="mt-auto">
+                <button class="btn btn-primary" onclick="createGame()">Create Room</button>
+            </div>
+        </div>
+
+        <!-- Join Game Screen -->
+        <div id="screen-join" class="screen">
+            <div class="header">
+                <button class="btn btn-secondary btn-small" onclick="showScreen('screen-home')">← Back</button>
+            </div>
+            
+            <div class="logo" style="font-size: 2.5rem; margin: 20px 0;">Join Game</div>
+            
+            <div class="input-group">
+                <label>Room code</label>
+                <input type="text" id="room-code" placeholder="Enter 4-letter code" maxlength="4" style="text-transform: uppercase; text-align: center; font-size: 1.5rem; letter-spacing: 4px;">
+            </div>
+            
+            <div class="input-group">
+                <label>Your name</label>
+                <input type="text" id="player-name" placeholder="Enter your name" maxlength="20">
+            </div>
+            
+            <div id="join-error" class="error-message" style="display: none;"></div>
+            
+            <div class="mt-auto">
+                <button class="btn btn-primary" onclick="joinGame()">Join Room</button>
+            </div>
+        </div>
+
+        <!-- Lobby Screen (Host) -->
+        <div id="screen-lobby-host" class="screen">
+            <div class="header">
+                <span class="header-title">Lobby</span>
+            </div>
+            
+            <div class="card room-code">
+                <div class="room-code-label">Room Code</div>
+                <div class="room-code-value" id="display-room-code">----</div>
+            </div>
+            
+            <div class="card">
+                <h3 style="margin-bottom: 15px;">Players</h3>
+                <ul class="players-list" id="lobby-players-host"></ul>
+            </div>
+            
+            <div class="mt-auto">
+                <button class="btn btn-primary" id="start-game-btn" onclick="startGame()" disabled>
+                    Waiting for players...
+                </button>
+            </div>
+        </div>
+
+        <!-- Lobby Screen (Player) -->
+        <div id="screen-lobby-player" class="screen">
+            <div class="header">
+                <span class="header-title">Lobby</span>
+            </div>
+            
+            <div class="card room-code">
+                <div class="room-code-label">Room Code</div>
+                <div class="room-code-value" id="display-room-code-player">----</div>
+            </div>
+            
+            <div class="card">
+                <h3 style="margin-bottom: 15px;">Players</h3>
+                <ul class="players-list" id="lobby-players"></ul>
+            </div>
+            
+            <div class="waiting-text">
+                Waiting for host to start the game<span class="dot-animation">...</span>
+            </div>
+        </div>
+
+        <!-- Seating Arrangement Screen (Host only) -->
+        <div id="screen-seating" class="screen">
+            <div class="header">
+                <span class="header-title">Arrange Players</span>
+            </div>
+            
+            <p class="text-center mb-20" style="color: var(--text-secondary);">
+                Drag names to match your real seating order (clockwise)
+            </p>
+            
+            <div class="seating-circle" id="seating-circle">
+                <div class="seating-center-label">
+                    <span class="icon">↻</span>
+                    clockwise
+                </div>
+            </div>
+            
+            <div class="mt-auto">
+                <button class="btn btn-primary" onclick="confirmSeating()">Confirm Seating</button>
+            </div>
+        </div>
+
+        <!-- Waiting for Seating Screen (Players) -->
+        <div id="screen-waiting-seating" class="screen">
+            <div class="flex-center">
+                <div class="logo" style="font-size: 2rem;">Setting up...</div>
+                <p class="waiting-text">Host is arranging the seating order<span class="dot-animation">...</span></p>
+            </div>
+        </div>
+
+        <!-- Write Prompt Screen (Round Host) -->
+        <div id="screen-write-prompt" class="screen">
+            <div class="header">
+                <span class="header-title">Your Round!</span>
+                <span class="round-info" id="round-info-prompt">Round 1</span>
+            </div>
+            
+            <p class="text-center mb-20" style="color: var(--text-secondary);">
+                Write a prompt for everyone to answer
+            </p>
+            
+            <div class="input-group">
+                <label>Complete the prompt</label>
+                <div style="display: flex; align-items: flex-start; gap: 8px;">
+                    <span style="font-family: 'Fredoka', sans-serif; font-size: 1.3rem; font-weight: 600; color: var(--accent-pink); padding-top: 14px;">Things...</span>
+                    <textarea id="prompt-input" rows="2" placeholder="I would name my pet rock" style="flex: 1;"></textarea>
+                </div>
+            </div>
+            
+            <div id="prompt-error" class="error-message" style="display: none;"></div>
+            
+            <div class="mt-auto">
+                <button class="btn btn-primary" onclick="submitPrompt()">Send to Everyone</button>
+            </div>
+        </div>
+
+        <!-- Waiting for Prompt Screen (Players) -->
+        <div id="screen-waiting-prompt" class="screen">
+            <div class="header">
+                <span class="header-title">New Round</span>
+                <span class="round-info" id="round-info-waiting">Round 1</span>
+            </div>
+            
+            <div class="flex-center">
+                <p class="waiting-text">
+                    <span id="round-host-name">Host</span> is writing the prompt<span class="dot-animation">...</span>
+                </p>
+            </div>
+        </div>
+
+        <!-- Answer Screen (All players) -->
+        <div id="screen-answer" class="screen">
+            <div class="header">
+                <span class="header-title">Answer Time!</span>
+                <span class="round-info" id="round-info-answer">Round 1</span>
+            </div>
+            
+            <div class="prompt-display" id="answer-prompt">Things...</div>
+            
+            <div class="input-group">
+                <label>Your answer</label>
+                <textarea id="answer-input" rows="3" placeholder="Write your answer..."></textarea>
+            </div>
+            
+            <div class="status-bar" id="answers-status" style="display: none;">
+                <span class="icon">✓</span>
+                <span id="answers-count">0/0 answers in</span>
+            </div>
+            
+            <div class="mt-auto">
+                <button class="btn btn-primary" id="submit-answer-btn" onclick="submitAnswer()">Submit Answer</button>
+            </div>
+        </div>
+
+        <!-- Waiting for Answers Screen -->
+        <div id="screen-waiting-answers" class="screen">
+            <div class="header">
+                <span class="header-title">Answers Coming In</span>
+                <span class="round-info" id="round-info-waiting-answers">Round 1</span>
+            </div>
+            
+            <div class="prompt-display" id="waiting-answers-prompt">Things...</div>
+            
+            <div class="status-bar">
+                <span class="icon">✓</span>
+                <span id="waiting-answers-count">0/0 answers in</span>
+            </div>
+            
+            <div class="waiting-text">
+                Waiting for everyone to answer<span class="dot-animation">...</span>
+            </div>
+        </div>
+
+        <!-- Reading Answers Screen (Round Host) -->
+        <div id="screen-reading" class="screen">
+            <div class="header">
+                <span class="header-title">Read These Out!</span>
+                <span class="round-info" id="round-info-reading">Round 1</span>
+            </div>
+            
+            <div class="prompt-display" id="reading-prompt" style="font-size: 1.3rem;">Things...</div>
+            
+            <p class="text-center mb-20" style="color: var(--text-secondary);">
+                Read all answers aloud to the group
+            </p>
+            
+            <div id="answers-to-read"></div>
+            
+            <div class="mt-auto">
+                <button class="btn btn-primary" onclick="startGuessing()">Start Guessing</button>
+            </div>
+        </div>
+
+        <!-- Guessing Screen (Round Host) -->
+        <div id="screen-guessing-host" class="screen">
+            <div class="header">
+                <span class="header-title">Guessing</span>
+                <span class="round-info" id="round-info-guessing">Round 1</span>
+            </div>
+            
+            <div class="turn-indicator">
+                <div class="label">Current Guesser</div>
+                <div class="name" id="current-guesser-name">Player</div>
+            </div>
+            
+            <div id="remaining-answers"></div>
+            
+            <div class="guess-buttons">
+                <button class="btn btn-danger" onclick="handleGuess(false)">✗</button>
+                <button class="btn btn-success" onclick="handleGuess(true)">✓</button>
+            </div>
+        </div>
+
+        <!-- Select Answer Screen (Round Host - after correct guess) -->
+        <div id="screen-select-answer" class="screen">
+            <div class="header">
+                <span class="header-title">Which Answer?</span>
+            </div>
+            
+            <p class="text-center mb-20" style="color: var(--text-secondary);">
+                Tap the answer that <span id="guesser-name-select">Player</span> correctly guessed
+            </p>
+            
+            <div id="selectable-answers"></div>
+        </div>
+
+        <!-- Waiting During Guessing Screen (Players) -->
+        <div id="screen-guessing-player" class="screen">
+            <div class="header">
+                <span class="header-title">Guessing Round</span>
+                <span class="round-info" id="round-info-guessing-player">Round 1</span>
+            </div>
+            
+            <div class="prompt-display" id="guessing-player-prompt" style="font-size: 1.3rem;">Things...</div>
+            
+            <div class="turn-indicator">
+                <div class="label">Current Guesser</div>
+                <div class="name" id="current-guesser-name-player">Player</div>
+            </div>
+            
+            <div id="answers-remaining-count" class="status-bar">
+                <span class="icon">📝</span>
+                <span id="remaining-count-text">5 answers remaining</span>
+            </div>
+        </div>
+
+        <!-- Survivor Celebration Screen -->
+        <div id="screen-survivor" class="screen">
+            <div class="flex-center">
+                <div class="survivor-celebration">
+                    <div class="crown">👑</div>
+                    <div class="message">You Survived!</div>
+                    <p style="color: var(--text-secondary); margin-top: 10px;">Nobody guessed your answer!</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bonus Point Screen (Round Host) -->
+        <div id="screen-bonus" class="screen">
+            <div class="header">
+                <span class="header-title">Bonus Point!</span>
+            </div>
+            
+            <div class="bonus-section">
+                <h3>🌟 Pick Your Favourite Answer 🌟</h3>
+                <p style="color: var(--text-secondary); font-size: 0.9rem;">Award a bonus point to the best answer</p>
+            </div>
+            
+            <div id="bonus-answers" class="mt-20"></div>
+        </div>
+
+        <!-- Waiting for Bonus Screen (Players) -->
+        <div id="screen-waiting-bonus" class="screen">
+            <div class="header">
+                <span class="header-title">Bonus Point</span>
+            </div>
+            
+            <div class="flex-center">
+                <p class="waiting-text">
+                    <span id="bonus-host-name">Host</span> is picking their favourite answer<span class="dot-animation">...</span>
+                </p>
+            </div>
+        </div>
+
+        <!-- Round Summary Screen -->
+        <div id="screen-round-summary" class="screen">
+            <div class="header">
+                <span class="header-title">Round Complete!</span>
+                <span class="round-info" id="round-info-summary">Round 1</span>
+            </div>
+            
+            <div class="card">
+                <h3 style="margin-bottom: 15px; text-align: center;">Scores</h3>
+                <div id="round-scores"></div>
+            </div>
+            
+            <div id="next-host-info" class="text-center mt-20" style="color: var(--text-secondary);"></div>
+            
+            <div class="mt-auto" id="next-round-btn-container">
+                <button class="btn btn-primary" onclick="nextRound()">Next Round</button>
+            </div>
+        </div>
+
+        <!-- Game Over Screen -->
+        <div id="screen-game-over" class="screen">
+            <div class="logo" style="font-size: 2.5rem;">Game Over!</div>
+            
+            <div class="card">
+                <h3 style="margin-bottom: 15px; text-align: center;">Final Scores</h3>
+                <div id="final-scores"></div>
+            </div>
+            
+            <div class="mt-auto">
+                <button class="btn btn-primary" onclick="playAgain()">Play Again</button>
+                <button class="btn btn-secondary" onclick="exitGame()">Exit</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+        import { getDatabase, ref, set, get, push, onValue, update, remove, onDisconnect } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
+
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyCtRYs3BlGDWlgfFfm6fi1TDXPr_M0Iakg",
+            authDomain: "reubensthingsgame.firebaseapp.com",
+            projectId: "reubensthingsgame",
+            storageBucket: "reubensthingsgame.firebasestorage.app",
+            messagingSenderId: "459501883260",
+            appId: "1:459501883260:web:8a3132289b2a4fb01b9ef9",
+            databaseURL: "https://reubensthingsgame-default-rtdb.europe-west1.firebasedatabase.app"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+
+        // Game state
+        let gameState = {
+            roomCode: null,
+            playerId: null,
+            playerName: null,
+            isHost: false,
+            isRoundHost: false,
+            players: [],
+            seatingOrder: [],
+            currentRound: 0,
+            roundHostIndex: 0,
+            currentGuesserIndex: 0,
+            prompt: '',
+            answers: {},
+            eliminatedPlayers: [],
+            points: {}
+        };
+
+        // Make functions available globally
+        window.showScreen = showScreen;
+        window.createGame = createGame;
+        window.joinGame = joinGame;
+        window.startGame = startGame;
+        window.confirmSeating = confirmSeating;
+        window.submitPrompt = submitPrompt;
+        window.submitAnswer = submitAnswer;
+        window.startGuessing = startGuessing;
+        window.handleGuess = handleGuess;
+        window.selectAnswer = selectAnswer;
+        window.awardBonus = awardBonus;
+        window.nextRound = nextRound;
+        window.playAgain = playAgain;
+        window.exitGame = exitGame;
+
+        // Player colors
+        const playerColors = [
+            'color-0', 'color-1', 'color-2', 'color-3', 'color-4',
+            'color-5', 'color-6', 'color-7', 'color-8', 'color-9'
+        ];
+
+        function showScreen(screenId) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById(screenId).classList.add('active');
+        }
+
+        function generateRoomCode() {
+            const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ';
+            let code = '';
+            for (let i = 0; i < 4; i++) {
+                code += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            return code;
+        }
+
+        function generatePlayerId() {
+            return 'player_' + Math.random().toString(36).substr(2, 9);
+        }
+
+        async function createGame() {
+            const nameInput = document.getElementById('host-name');
+            const name = nameInput.value.trim();
+            
+            if (!name) {
+                showError('create-error', 'Please enter your name');
+                return;
+            }
+
+            const roomCode = generateRoomCode();
+            const playerId = generatePlayerId();
+            
+            gameState.roomCode = roomCode;
+            gameState.playerId = playerId;
+            gameState.playerName = name;
+            gameState.isHost = true;
+
+            try {
+                await set(ref(db, `rooms/${roomCode}`), {
+                    host: playerId,
+                    status: 'lobby',
+                    createdAt: Date.now(),
+                    players: {
+                        [playerId]: {
+                            name: name,
+                            colorIndex: 0,
+                            isHost: true,
+                            joinedAt: Date.now()
+                        }
+                    }
+                });
+
+                // Set up disconnect handler
+                const playerRef = ref(db, `rooms/${roomCode}/players/${playerId}`);
+                onDisconnect(playerRef).remove();
+
+                document.getElementById('display-room-code').textContent = roomCode;
+                showScreen('screen-lobby-host');
+                listenToRoom();
+            } catch (error) {
+                showError('create-error', 'Failed to create room. Please try again.');
+                console.error(error);
+            }
+        }
+
+        async function joinGame() {
+            const codeInput = document.getElementById('room-code');
+            const nameInput = document.getElementById('player-name');
+            const code = codeInput.value.trim().toUpperCase();
+            const name = nameInput.value.trim();
+
+            if (!code || code.length !== 4) {
+                showError('join-error', 'Please enter a valid 4-letter room code');
+                return;
+            }
+
+            if (!name) {
+                showError('join-error', 'Please enter your name');
+                return;
+            }
+
+            try {
+                const roomRef = ref(db, `rooms/${code}`);
+                const snapshot = await get(roomRef);
+
+                if (!snapshot.exists()) {
+                    showError('join-error', 'Room not found. Check the code and try again.');
+                    return;
+                }
+
+                const roomData = snapshot.val();
+                
+                if (roomData.status !== 'lobby') {
+                    showError('join-error', 'Game already in progress');
+                    return;
+                }
+
+                const playerId = generatePlayerId();
+                const playerCount = Object.keys(roomData.players || {}).length;
+
+                gameState.roomCode = code;
+                gameState.playerId = playerId;
+                gameState.playerName = name;
+                gameState.isHost = false;
+
+                await set(ref(db, `rooms/${code}/players/${playerId}`), {
+                    name: name,
+                    colorIndex: playerCount % 10,
+                    isHost: false,
+                    joinedAt: Date.now()
+                });
+
+                // Set up disconnect handler
+                const playerRef = ref(db, `rooms/${code}/players/${playerId}`);
+                onDisconnect(playerRef).remove();
+
+                document.getElementById('display-room-code-player').textContent = code;
+                showScreen('screen-lobby-player');
+                listenToRoom();
+            } catch (error) {
+                showError('join-error', 'Failed to join room. Please try again.');
+                console.error(error);
+            }
+        }
+
+        function listenToRoom() {
+            const roomRef = ref(db, `rooms/${gameState.roomCode}`);
+            
+            onValue(roomRef, (snapshot) => {
+                if (!snapshot.exists()) {
+                    alert('Room has been closed');
+                    showScreen('screen-home');
+                    return;
+                }
+
+                const data = snapshot.val();
+                handleRoomUpdate(data);
+            });
+        }
+
+        function handleRoomUpdate(data) {
+            // Update players list
+            if (data.players) {
+                gameState.players = Object.entries(data.players).map(([id, player]) => ({
+                    id,
+                    ...player
+                }));
+            }
+
+            // Update seating order
+            if (data.seatingOrder) {
+                gameState.seatingOrder = data.seatingOrder;
+            }
+
+            // Update game state
+            if (data.currentRound !== undefined) {
+                gameState.currentRound = data.currentRound;
+            }
+            if (data.roundHostIndex !== undefined) {
+                gameState.roundHostIndex = data.roundHostIndex;
+            }
+            if (data.prompt) {
+                gameState.prompt = data.prompt;
+            }
+            if (data.answers) {
+                gameState.answers = data.answers;
+            }
+            if (data.eliminatedPlayers) {
+                gameState.eliminatedPlayers = data.eliminatedPlayers;
+            } else {
+                gameState.eliminatedPlayers = [];
+            }
+            if (data.points) {
+                gameState.points = data.points;
+            }
+            if (data.currentGuesserIndex !== undefined) {
+                gameState.currentGuesserIndex = data.currentGuesserIndex;
+            }
+
+            // Check if we're the round host
+            if (gameState.seatingOrder.length > 0) {
+                const roundHostId = gameState.seatingOrder[gameState.roundHostIndex];
+                gameState.isRoundHost = (roundHostId === gameState.playerId);
+            }
+
+            // Update UI based on status
+            updateUI(data);
+        }
+
+        function updateUI(data) {
+            // Update lobby player lists
+            updatePlayersList('lobby-players-host');
+            updatePlayersList('lobby-players');
+
+            // Update start button
+            const startBtn = document.getElementById('start-game-btn');
+            if (startBtn && gameState.players.length >= 2) {
+                startBtn.disabled = false;
+                startBtn.textContent = 'Start Game';
+            }
+
+            // Handle different game states
+            switch (data.status) {
+                case 'lobby':
+                    // Already handled by create/join
+                    break;
+                    
+                case 'seating':
+                    if (gameState.isHost) {
+                        showSeatingScreen();
+                    } else {
+                        showScreen('screen-waiting-seating');
+                    }
+                    break;
+                    
+                case 'writing-prompt':
+                    showWritingPromptScreen(data);
+                    break;
+                    
+                case 'answering':
+                    showAnsweringScreen(data);
+                    break;
+                    
+                case 'reading':
+                    showReadingScreen(data);
+                    break;
+                    
+                case 'guessing':
+                    showGuessingScreen(data);
+                    break;
+                    
+                case 'selecting-answer':
+                    showSelectingAnswerScreen(data);
+                    break;
+                    
+                case 'bonus':
+                    showBonusScreen(data);
+                    break;
+                    
+                case 'round-summary':
+                    showRoundSummaryScreen(data);
+                    break;
+                    
+                case 'game-over':
+                    showGameOverScreen(data);
+                    break;
+            }
+        }
+
+        function updatePlayersList(elementId) {
+            const list = document.getElementById(elementId);
+            if (!list) return;
+
+            list.innerHTML = gameState.players.map((player, index) => `
+                <li class="player-item">
+                    <div class="player-avatar ${playerColors[player.colorIndex || index % 10]}">
+                        ${player.name.charAt(0).toUpperCase()}
+                    </div>
+                    <span class="player-name">${player.name}</span>
+                    ${player.isHost ? '<span class="player-host">HOST</span>' : ''}
+                </li>
+            `).join('');
+        }
+
+        async function startGame() {
+            if (gameState.players.length < 2) {
+                alert('Need at least 2 players to start');
+                return;
+            }
+
+            await update(ref(db, `rooms/${gameState.roomCode}`), {
+                status: 'seating'
+            });
+        }
+
+        function showSeatingScreen() {
+            showScreen('screen-seating');
+            renderSeatingCircle();
+        }
+
+        let seatingOrderLocal = []; // Track local order during arrangement
+        
+        function renderSeatingCircle() {
+            const circle = document.getElementById('seating-circle');
+            const players = gameState.players;
+            
+            // Initialize local seating order
+            seatingOrderLocal = players.map(p => p.id);
+            
+            // Keep the center label, clear the rest
+            circle.innerHTML = `
+                <div class="seating-center-label">
+                    <span class="icon">↻</span>
+                    clockwise
+                </div>
+            `;
+            
+            renderPlayersInCircle();
+            setupDragAndDrop();
+        }
+        
+        function getCirclePosition(index, total) {
+            const radius = 105;
+            const centerX = 140;
+            const centerY = 140;
+            const angle = (index / total) * 2 * Math.PI - Math.PI / 2;
+            return {
+                x: centerX + radius * Math.cos(angle) - 35,
+                y: centerY + radius * Math.sin(angle) - 35
+            };
+        }
+        
+        function renderPlayersInCircle() {
+            const circle = document.getElementById('seating-circle');
+            const count = seatingOrderLocal.length;
+            
+            // Remove existing players (keep center label)
+            circle.querySelectorAll('.seating-player').forEach(el => el.remove());
+            
+            seatingOrderLocal.forEach((playerId, index) => {
+                const player = gameState.players.find(p => p.id === playerId);
+                if (!player) return;
+                
+                const pos = getCirclePosition(index, count);
+                const colorIndex = player.colorIndex || gameState.players.indexOf(player) % 10;
+                
+                const el = document.createElement('div');
+                el.className = `seating-player ${playerColors[colorIndex]}`;
+                el.dataset.playerId = playerId;
+                el.dataset.index = index;
+                el.style.left = `${pos.x}px`;
+                el.style.top = `${pos.y}px`;
+                el.textContent = player.name;
+                
+                circle.appendChild(el);
+            });
+        }
+
+        function setupDragAndDrop() {
+            const circle = document.getElementById('seating-circle');
+            let draggedElement = null;
+            let draggedIndex = null;
+            let startX, startY;
+            let offsetX, offsetY;
+            
+            function getIndexFromPosition(clientX, clientY) {
+                const rect = circle.getBoundingClientRect();
+                const x = clientX - rect.left - 140; // Center-relative
+                const y = clientY - rect.top - 140;
+                
+                // Calculate angle from center
+                let angle = Math.atan2(y, x) + Math.PI / 2; // Adjust so 0 is at top
+                if (angle < 0) angle += 2 * Math.PI;
+                
+                // Convert to index
+                const count = seatingOrderLocal.length;
+                const index = Math.round((angle / (2 * Math.PI)) * count) % count;
+                return index;
+            }
+            
+            function handleDragStart(e, element) {
+                draggedElement = element;
+                draggedIndex = parseInt(element.dataset.index);
+                
+                const rect = element.getBoundingClientRect();
+                const clientX = e.clientX || e.touches[0].clientX;
+                const clientY = e.clientY || e.touches[0].clientY;
+                
+                offsetX = clientX - rect.left - 35;
+                offsetY = clientY - rect.top - 35;
+                
+                element.classList.add('dragging');
+            }
+            
+            function handleDragMove(e) {
+                if (!draggedElement) return;
+                e.preventDefault();
+                
+                const clientX = e.clientX || e.touches[0].clientX;
+                const clientY = e.clientY || e.touches[0].clientY;
+                
+                const rect = circle.getBoundingClientRect();
+                const x = clientX - rect.left - offsetX - 35;
+                const y = clientY - rect.top - offsetY - 35;
+                
+                // Move dragged element freely
+                draggedElement.style.left = `${x}px`;
+                draggedElement.style.top = `${y}px`;
+                draggedElement.style.transition = 'transform 0.15s ease, box-shadow 0.15s ease';
+                
+                // Calculate which slot we're hovering over
+                const hoverIndex = getIndexFromPosition(clientX, clientY);
+                
+                if (hoverIndex !== draggedIndex) {
+                    // Reorder the array
+                    const item = seatingOrderLocal.splice(draggedIndex, 1)[0];
+                    seatingOrderLocal.splice(hoverIndex, 0, item);
+                    draggedIndex = hoverIndex;
+                    
+                    // Update all OTHER elements to their new positions
+                    const count = seatingOrderLocal.length;
+                    seatingOrderLocal.forEach((playerId, index) => {
+                        const el = circle.querySelector(`[data-player-id="${playerId}"]`);
+                        if (el && el !== draggedElement) {
+                            const pos = getCirclePosition(index, count);
+                            el.style.left = `${pos.x}px`;
+                            el.style.top = `${pos.y}px`;
+                            el.dataset.index = index;
+                        }
+                    });
+                    
+                    // Update dragged element's index
+                    draggedElement.dataset.index = hoverIndex;
+                }
+            }
+            
+            function handleDragEnd() {
+                if (!draggedElement) return;
+                
+                // Snap dragged element to its final position
+                const finalIndex = parseInt(draggedElement.dataset.index);
+                const pos = getCirclePosition(finalIndex, seatingOrderLocal.length);
+                
+                draggedElement.style.transition = 'left 0.25s ease, top 0.25s ease, transform 0.15s ease, box-shadow 0.15s ease';
+                draggedElement.style.left = `${pos.x}px`;
+                draggedElement.style.top = `${pos.y}px`;
+                draggedElement.classList.remove('dragging');
+                
+                draggedElement = null;
+                draggedIndex = null;
+            }
+            
+            // Mouse events
+            circle.addEventListener('mousedown', (e) => {
+                const player = e.target.closest('.seating-player');
+                if (player) handleDragStart(e, player);
+            });
+            
+            document.addEventListener('mousemove', handleDragMove);
+            document.addEventListener('mouseup', handleDragEnd);
+            
+            // Touch events
+            circle.addEventListener('touchstart', (e) => {
+                const player = e.target.closest('.seating-player');
+                if (player) handleDragStart(e, player);
+            }, { passive: false });
+            
+            document.addEventListener('touchmove', handleDragMove, { passive: false });
+            document.addEventListener('touchend', handleDragEnd);
+        }
+
+        async function confirmSeating() {
+            // Use the local seating order we've been tracking
+            const seatingOrder = seatingOrderLocal;
+            
+            // Initialize points
+            const points = {};
+            seatingOrder.forEach(id => {
+                points[id] = 0;
+            });
+
+            await update(ref(db, `rooms/${gameState.roomCode}`), {
+                seatingOrder: seatingOrder,
+                roundHostIndex: 0,
+                currentRound: 1,
+                points: points,
+                status: 'writing-prompt'
+            });
+        }
+
+        function showWritingPromptScreen(data) {
+            const roundHostId = data.seatingOrder[data.roundHostIndex];
+            const roundHost = gameState.players.find(p => p.id === roundHostId);
+            
+            if (gameState.playerId === roundHostId) {
+                document.getElementById('round-info-prompt').textContent = `Round ${data.currentRound}`;
+                showScreen('screen-write-prompt');
+            } else {
+                document.getElementById('round-info-waiting').textContent = `Round ${data.currentRound}`;
+                document.getElementById('round-host-name').textContent = roundHost?.name || 'Host';
+                showScreen('screen-waiting-prompt');
+            }
+        }
+
+        async function submitPrompt() {
+            const input = document.getElementById('prompt-input');
+            const promptEnd = input.value.trim();
+
+            if (!promptEnd) {
+                showError('prompt-error', 'Please complete the prompt');
+                return;
+            }
+
+            const fullPrompt = 'Things... ' + promptEnd;
+
+            await update(ref(db, `rooms/${gameState.roomCode}`), {
+                prompt: fullPrompt,
+                answers: {},
+                eliminatedPlayers: [],
+                status: 'answering'
+            });
+        }
+
+        function showAnsweringScreen(data) {
+            document.getElementById('round-info-answer').textContent = `Round ${data.currentRound}`;
+            document.getElementById('answer-prompt').textContent = data.prompt;
+            
+            const answerCount = Object.keys(data.answers || {}).length;
+            const totalPlayers = gameState.players.length;
+            
+            // Check if we've already answered
+            if (data.answers && data.answers[gameState.playerId]) {
+                document.getElementById('round-info-waiting-answers').textContent = `Round ${data.currentRound}`;
+                document.getElementById('waiting-answers-prompt').textContent = data.prompt;
+                document.getElementById('waiting-answers-count').textContent = `${answerCount}/${totalPlayers} answers in`;
+                showScreen('screen-waiting-answers');
+            } else {
+                document.getElementById('answers-count').textContent = `${answerCount}/${totalPlayers} answers in`;
+                document.getElementById('answers-status').style.display = answerCount > 0 ? 'flex' : 'none';
+                showScreen('screen-answer');
+            }
+        }
+
+        async function submitAnswer() {
+            const input = document.getElementById('answer-input');
+            const answer = input.value.trim();
+
+            if (!answer) {
+                alert('Please enter an answer');
+                return;
+            }
+
+            const btn = document.getElementById('submit-answer-btn');
+            btn.disabled = true;
+            btn.textContent = 'Submitted!';
+
+            await set(ref(db, `rooms/${gameState.roomCode}/answers/${gameState.playerId}`), answer);
+
+            // Check if all answers are in
+            const snapshot = await get(ref(db, `rooms/${gameState.roomCode}`));
+            const data = snapshot.val();
+            const answerCount = Object.keys(data.answers || {}).length;
+            
+            if (answerCount === gameState.players.length) {
+                await update(ref(db, `rooms/${gameState.roomCode}`), {
+                    status: 'reading'
+                });
+            }
+
+            input.value = '';
+        }
+
+        function showReadingScreen(data) {
+            if (gameState.isRoundHost) {
+                document.getElementById('round-info-reading').textContent = `Round ${data.currentRound}`;
+                document.getElementById('reading-prompt').textContent = data.prompt;
+                
+                const answersDiv = document.getElementById('answers-to-read');
+                const shuffledAnswers = shuffleAnswers(data.answers);
+                
+                answersDiv.innerHTML = shuffledAnswers.map(({ playerId, answer }) => {
+                    const player = gameState.players.find(p => p.id === playerId);
+                    return `
+                        <div class="answer-card">
+                            <div class="answer-text">"${answer}"</div>
+                            <div class="answer-author">— ${player?.name || 'Unknown'}</div>
+                        </div>
+                    `;
+                }).join('');
+                
+                showScreen('screen-reading');
+            } else {
+                // Players wait
+                showScreen('screen-waiting-answers');
+                document.getElementById('waiting-answers-prompt').textContent = data.prompt;
+            }
+        }
+
+        function shuffleAnswers(answers) {
+            const entries = Object.entries(answers).map(([playerId, answer]) => ({ playerId, answer }));
+            for (let i = entries.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [entries[i], entries[j]] = [entries[j], entries[i]];
+            }
+            return entries;
+        }
+
+        async function startGuessing() {
+            // Find first guesser (player to left of host, skipping host)
+            const hostIndex = gameState.roundHostIndex;
+            let guesserIndex = (hostIndex + 1) % gameState.seatingOrder.length;
+            
+            await update(ref(db, `rooms/${gameState.roomCode}`), {
+                currentGuesserIndex: guesserIndex,
+                status: 'guessing'
+            });
+        }
+
+        function showGuessingScreen(data) {
+            const currentGuesserId = data.seatingOrder[data.currentGuesserIndex];
+            const currentGuesser = gameState.players.find(p => p.id === currentGuesserId);
+            const eliminated = data.eliminatedPlayers || [];
+            
+            // Check if round is over (only one answer left)
+            const remainingAnswers = Object.entries(data.answers || {})
+                .filter(([playerId]) => !eliminated.includes(playerId));
+            
+            if (remainingAnswers.length <= 1) {
+                // Round over - check if we're the survivor
+                if (remainingAnswers.length === 1 && remainingAnswers[0][0] === gameState.playerId) {
+                    showScreen('screen-survivor');
+                    setTimeout(() => {
+                        // Move to bonus
+                    }, 2000);
+                }
+                return;
+            }
+
+            if (gameState.isRoundHost) {
+                document.getElementById('round-info-guessing').textContent = `Round ${data.currentRound}`;
+                document.getElementById('current-guesser-name').textContent = currentGuesser?.name || 'Player';
+                
+                const answersDiv = document.getElementById('remaining-answers');
+                answersDiv.innerHTML = remainingAnswers.map(([playerId, answer]) => {
+                    const player = gameState.players.find(p => p.id === playerId);
+                    return `
+                        <div class="answer-card" data-player-id="${playerId}">
+                            <div class="answer-text">"${answer}"</div>
+                            <div class="answer-author">— ${player?.name || 'Unknown'}</div>
+                        </div>
+                    `;
+                }).join('');
+                
+                showScreen('screen-guessing-host');
+            } else {
+                document.getElementById('round-info-guessing-player').textContent = `Round ${data.currentRound}`;
+                document.getElementById('guessing-player-prompt').textContent = data.prompt;
+                document.getElementById('current-guesser-name-player').textContent = currentGuesser?.name || 'Player';
+                
+                document.getElementById('remaining-count-text').textContent = `${remainingAnswers.length} answers remaining`;
+                
+                showScreen('screen-guessing-player');
+            }
+        }
+
+        async function handleGuess(correct) {
+            if (correct) {
+                // Show answer selection screen
+                await update(ref(db, `rooms/${gameState.roomCode}`), {
+                    status: 'selecting-answer'
+                });
+            } else {
+                // Move to next guesser
+                await moveToNextGuesser();
+            }
+        }
+
+        function showSelectingAnswerScreen(data) {
+            if (!gameState.isRoundHost) {
+                showGuessingScreen(data);
+                return;
+            }
+
+            const currentGuesserId = data.seatingOrder[data.currentGuesserIndex];
+            const currentGuesser = gameState.players.find(p => p.id === currentGuesserId);
+            const eliminated = data.eliminatedPlayers || [];
+            
+            document.getElementById('guesser-name-select').textContent = currentGuesser?.name || 'Player';
+            
+            const remainingAnswers = Object.entries(data.answers || {})
+                .filter(([playerId]) => !eliminated.includes(playerId));
+            
+            const answersDiv = document.getElementById('selectable-answers');
+            answersDiv.innerHTML = remainingAnswers.map(([playerId, answer]) => {
+                const player = gameState.players.find(p => p.id === playerId);
+                return `
+                    <div class="answer-card" onclick="selectAnswer('${playerId}')">
+                        <div class="answer-text">"${answer}"</div>
+                        <div class="answer-author">— ${player?.name || 'Unknown'}</div>
+                    </div>
+                `;
+            }).join('');
+            
+            showScreen('screen-select-answer');
+        }
+
+        async function selectAnswer(guessedPlayerId) {
+            const snapshot = await get(ref(db, `rooms/${gameState.roomCode}`));
+            const data = snapshot.val();
+            
+            const currentGuesserId = data.seatingOrder[data.currentGuesserIndex];
+            const eliminated = [...(data.eliminatedPlayers || []), guessedPlayerId];
+            const points = { ...data.points };
+            
+            // Award point to guesser
+            points[currentGuesserId] = (points[currentGuesserId] || 0) + 1;
+            
+            // Check if round is over
+            const remainingAnswers = Object.entries(data.answers || {})
+                .filter(([playerId]) => !eliminated.includes(playerId));
+            
+            if (remainingAnswers.length <= 1) {
+                // Round over, move to bonus
+                await update(ref(db, `rooms/${gameState.roomCode}`), {
+                    eliminatedPlayers: eliminated,
+                    points: points,
+                    survivor: remainingAnswers.length === 1 ? remainingAnswers[0][0] : null,
+                    status: 'bonus'
+                });
+            } else {
+                // Same guesser goes again
+                await update(ref(db, `rooms/${gameState.roomCode}`), {
+                    eliminatedPlayers: eliminated,
+                    points: points,
+                    status: 'guessing'
+                });
+            }
+        }
+
+        async function moveToNextGuesser() {
+            const snapshot = await get(ref(db, `rooms/${gameState.roomCode}`));
+            const data = snapshot.val();
+            
+            const seatingOrder = data.seatingOrder;
+            const eliminated = data.eliminatedPlayers || [];
+            const hostIndex = data.roundHostIndex;
+            let currentIndex = data.currentGuesserIndex;
+            let startIndex = currentIndex;
+            let loopedToStart = false;
+            
+            // Find next eligible guesser
+            do {
+                currentIndex = (currentIndex + 1) % seatingOrder.length;
+                
+                // Check if we've looped back to start position
+                if (currentIndex === (hostIndex + 1) % seatingOrder.length) {
+                    loopedToStart = true;
+                }
+                
+                const playerId = seatingOrder[currentIndex];
+                
+                // Skip host and eliminated players
+                if (currentIndex !== hostIndex && !eliminated.includes(playerId)) {
+                    break;
+                }
+            } while (currentIndex !== startIndex);
+            
+            await update(ref(db, `rooms/${gameState.roomCode}`), {
+                currentGuesserIndex: currentIndex,
+                loopedToStart: loopedToStart
+            });
+        }
+
+        function showBonusScreen(data) {
+            // Check if we're the survivor
+            if (data.survivor === gameState.playerId) {
+                showScreen('screen-survivor');
+                if (!gameState.isRoundHost) {
+                    return;
+                }
+            }
+
+            if (gameState.isRoundHost) {
+                const answersDiv = document.getElementById('bonus-answers');
+                answersDiv.innerHTML = Object.entries(data.answers || {}).map(([playerId, answer]) => {
+                    const player = gameState.players.find(p => p.id === playerId);
+                    return `
+                        <div class="answer-card" onclick="awardBonus('${playerId}')">
+                            <div class="answer-text">"${answer}"</div>
+                            <div class="answer-author">— ${player?.name || 'Unknown'}</div>
+                        </div>
+                    `;
+                }).join('');
+                
+                showScreen('screen-bonus');
+            } else {
+                const roundHostId = data.seatingOrder[data.roundHostIndex];
+                const roundHost = gameState.players.find(p => p.id === roundHostId);
+                document.getElementById('bonus-host-name').textContent = roundHost?.name || 'Host';
+                
+                if (data.survivor !== gameState.playerId) {
+                    showScreen('screen-waiting-bonus');
+                }
+            }
+        }
+
+        async function awardBonus(playerId) {
+            const snapshot = await get(ref(db, `rooms/${gameState.roomCode}`));
+            const data = snapshot.val();
+            
+            const points = { ...data.points };
+            points[playerId] = (points[playerId] || 0) + 1;
+            
+            await update(ref(db, `rooms/${gameState.roomCode}`), {
+                points: points,
+                bonusWinner: playerId,
+                status: 'round-summary'
+            });
+        }
+
+        function showRoundSummaryScreen(data) {
+            document.getElementById('round-info-summary').textContent = `Round ${data.currentRound}`;
+            
+            const scoresDiv = document.getElementById('round-scores');
+            const sortedPlayers = [...gameState.players].sort((a, b) => 
+                (data.points[b.id] || 0) - (data.points[a.id] || 0)
+            );
+            
+            scoresDiv.innerHTML = sortedPlayers.map((player, index) => `
+                <div class="score-item ${index === 0 ? 'winner' : ''}">
+                    <span class="score-rank">${index === 0 ? '👑' : index + 1}</span>
+                    <span class="score-name">${player.name}</span>
+                    <span class="score-points">${data.points[player.id] || 0}</span>
+                </div>
+            `).join('');
+            
+            // Next host info
+            const nextHostIndex = (data.roundHostIndex + 1) % data.seatingOrder.length;
+            const isLastRound = data.currentRound >= data.seatingOrder.length;
+            
+            if (isLastRound) {
+                document.getElementById('next-host-info').textContent = 'Final round complete!';
+                document.getElementById('next-round-btn-container').innerHTML = `
+                    <button class="btn btn-primary" onclick="endGame()">See Final Results</button>
+                `;
+                window.endGame = endGame;
+            } else {
+                const nextHost = gameState.players.find(p => p.id === data.seatingOrder[nextHostIndex]);
+                document.getElementById('next-host-info').textContent = `Next host: ${nextHost?.name || 'Unknown'}`;
+                
+                if (gameState.isRoundHost) {
+                    document.getElementById('next-round-btn-container').innerHTML = `
+                        <button class="btn btn-primary" onclick="nextRound()">Next Round</button>
+                    `;
+                } else {
+                    document.getElementById('next-round-btn-container').innerHTML = `
+                        <p class="waiting-text">Waiting for next round<span class="dot-animation">...</span></p>
+                    `;
+                }
+            }
+            
+            showScreen('screen-round-summary');
+        }
+
+        async function nextRound() {
+            const snapshot = await get(ref(db, `rooms/${gameState.roomCode}`));
+            const data = snapshot.val();
+            
+            const nextRound = data.currentRound + 1;
+            const nextHostIndex = (data.roundHostIndex + 1) % data.seatingOrder.length;
+            
+            await update(ref(db, `rooms/${gameState.roomCode}`), {
+                currentRound: nextRound,
+                roundHostIndex: nextHostIndex,
+                prompt: '',
+                answers: {},
+                eliminatedPlayers: [],
+                currentGuesserIndex: 0,
+                survivor: null,
+                bonusWinner: null,
+                status: 'writing-prompt'
+            });
+        }
+
+        async function endGame() {
+            await update(ref(db, `rooms/${gameState.roomCode}`), {
+                status: 'game-over'
+            });
+        }
+
+        function showGameOverScreen(data) {
+            const scoresDiv = document.getElementById('final-scores');
+            const sortedPlayers = [...gameState.players].sort((a, b) => 
+                (data.points[b.id] || 0) - (data.points[a.id] || 0)
+            );
+            
+            scoresDiv.innerHTML = sortedPlayers.map((player, index) => `
+                <div class="score-item ${index === 0 ? 'winner' : ''}">
+                    <span class="score-rank">${index === 0 ? '🏆' : index + 1}</span>
+                    <span class="score-name">${player.name}</span>
+                    <span class="score-points">${data.points[player.id] || 0}</span>
+                </div>
+            `).join('');
+            
+            showScreen('screen-game-over');
+        }
+
+        async function playAgain() {
+            if (gameState.isHost) {
+                await update(ref(db, `rooms/${gameState.roomCode}`), {
+                    status: 'seating',
+                    currentRound: 0,
+                    roundHostIndex: 0,
+                    prompt: '',
+                    answers: {},
+                    eliminatedPlayers: [],
+                    points: {},
+                    survivor: null,
+                    bonusWinner: null
+                });
+            }
+        }
+
+        function exitGame() {
+            remove(ref(db, `rooms/${gameState.roomCode}/players/${gameState.playerId}`));
+            gameState = {
+                roomCode: null,
+                playerId: null,
+                playerName: null,
+                isHost: false,
+                isRoundHost: false,
+                players: [],
+                seatingOrder: [],
+                currentRound: 0,
+                roundHostIndex: 0,
+                currentGuesserIndex: 0,
+                prompt: '',
+                answers: {},
+                eliminatedPlayers: [],
+                points: {}
+            };
+            showScreen('screen-home');
+        }
+
+        function showError(elementId, message) {
+            const el = document.getElementById(elementId);
+            el.textContent = message;
+            el.style.display = 'block';
+            setTimeout(() => {
+                el.style.display = 'none';
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
